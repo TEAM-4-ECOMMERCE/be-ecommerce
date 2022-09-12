@@ -14,7 +14,7 @@ type UserCore struct {
 type UserInterface interface {
 	GetUser() (data []UserCore, err error)
 	CreateUser (dataCreate UserCore) (row int, err error)
-	// DeleteData (dataDelete UserCore) (row int, err error)
-	// UpdateData (dataUpdate UserCore) (row int, err error)
+	DeleteData (dataDelete UserCore) (row int, err error)
+	UpdateData (dataUpdate UserCore) (row int, err error)
 }
 
