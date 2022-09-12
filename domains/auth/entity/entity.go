@@ -1,5 +1,6 @@
 package authentity
 
+
 type AuthEntity struct {
 	Id       uint
 	Email    string
