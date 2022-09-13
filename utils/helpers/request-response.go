@@ -8,6 +8,13 @@ func SuccessGetResponse(msg string, data interface{}) map[string]interface{} {
 	}
 }
 
+func SuccessGetResponseData(msg string) map[string]interface{} {
+	return map[string]interface{}{
+		"success": true,
+		"message": msg,
+	}
+}
+
 func FailedResponse(message string) map[string]interface{} {
 	return map[string]interface{}{
 		"success": false,

@@ -27,16 +27,7 @@ func (file *DataUser)GetUser() ([]users.UserCore, error)  {
 	return UserCore, nil
 }
 
-func (file *DataUser) CreateUser(dataCreate users.UserCore) (int, error) {
-	UserModel := FromCore(dataCreate)
-	tx := file.db.Create(&UserModel)
-	if tx.Error != nil {
-		return 0, tx.Error
-	}
-	return int(tx.RowsAffected), nil
-}
-
-func (file *DataUser) DeleteData(dataDelete users.UserCore) (int, error)  {
+func (file *DataUser) DeleteUser(dataDelete users.UserCore) (int, error)  {
 	tx := file.db.Delete(&User{})
 	if tx.Error != nil {
 		return -1, tx.Error
@@ -47,7 +38,7 @@ func (file *DataUser) DeleteData(dataDelete users.UserCore) (int, error)  {
 	return int(tx.RowsAffected), nil
 }
 
-func (file *DataUser)UpdateData(dataUpdate users.UserCore) (int, error)  {
+func (file *DataUser)UpdateUser(dataUpdate users.UserCore) (int, error)  {
 	tx := file.db.Model(&User{}).Updates(FromCore(dataUpdate))
 	if tx.Error != nil {
 		return -1, tx.Error
