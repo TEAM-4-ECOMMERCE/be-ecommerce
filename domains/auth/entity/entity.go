@@ -1,14 +1,15 @@
 package authentity
 
 type AuthEntity struct {
+	Id       uint
 	Email    string
 	Password string
 }
 
 type IusecaseAuth interface {
-	Login(userData AuthEntity) (err error, token string)
+	Login(userData AuthEntity) (token string, err error)
 }
 
 type IrepoAuth interface {
-	SelectUserByEmail(email string) (err error, uid int)
+	SelectUserByEmail(email string) (userEntity AuthEntity, err error)
 }
