@@ -15,6 +15,7 @@ type AppConfig struct {
 	DB_PASS     string
 	SERVER_PORT string
 	JWT_SECRET  string
+	BASE_URL    string
 }
 
 var mutex = sync.Mutex{}
@@ -39,5 +40,6 @@ func loadConfig() *AppConfig {
 		DB_PASS:     os.Getenv("DB_PASS"),
 		SERVER_PORT: os.Getenv("SERVER_PORT"),
 		JWT_SECRET:  os.Getenv("JWT_SECRET"),
+		BASE_URL:    os.Getenv("BASE_URL"),
 	}
 }

@@ -30,4 +30,5 @@ jobs:
             export DB_PASS=${{ secrets.DB_PASSWORD }}
             export SERVER_PORT=${{ secrets.SERVER_PORT }}
             export JWT_SECRET=${{ secrets.JWT_TOKEN }}
+            export BASE_URL: ${{ secrets.BASE_URL}}
             docker compose up -d

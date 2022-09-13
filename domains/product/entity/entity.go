@@ -1,36 +1,35 @@
 package productentity
 
 type ProductEntity struct {
-	ProductID    string
+	ProductID    uint
 	UserID       uint
+	CategoryID   uint
+	CategoryName string
 	Name         string
-	Category     CategoryEntity
 	Price        float64
 	Stock        uint
 	Description  string
 	ImageUrl     string
 	PreviousPage string
-	CurrentPage  string
+	CurrentPage  uint
 	NextPage     string
-}
-
-type CategoryEntity struct {
-	CategoryID   int
-	CategoryName string
+	PageSize     uint
+	SearchQuery  string
 }
 
 type IusecaseProduct interface {
 	Store(product ProductEntity) (err error)
 	Update(product ProductEntity) (err error)
 	Delete(product ProductEntity) (err error)
-	GetList(product ProductEntity) (err error, result []ProductEntity)
-	GetSingle(product ProductEntity) (err error, result ProductEntity)
+	GetList(product ProductEntity) (result []ProductEntity, err error)
+	GetSingle(product ProductEntity) (result ProductEntity, err error)
 }
 
 type IrepoProduct interface {
-	Insert(cart ProductEntity) (err error)
-	Update(cart ProductEntity) (err error)
-	Delete(cart ProductEntity) (err error)
-	FindAll(cart ProductEntity) (err error, result []ProductEntity)
-	Find(cart ProductEntity) (err error, result ProductEntity)
+	Insert(product ProductEntity) (affectedRow int, err error)
+	Update(product ProductEntity) (affectedRow int, err error)
+	Delete(product ProductEntity) (affectedRow int, err error)
+	CountData(uid uint) (totalRow uint, err error)
+	FindAll(product ProductEntity) (result []ProductEntity, err error)
+	Find(product ProductEntity) (result ProductEntity, err error)
 }
