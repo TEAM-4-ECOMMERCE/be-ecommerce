@@ -1,7 +1,6 @@
 mode: set
-e-commerce/domains/auth/usecases/auth-usecase.go:14.46,18.2 1 1
-e-commerce/domains/auth/usecases/auth-usecase.go:20.83,23.16 2 1
-e-commerce/domains/auth/usecases/auth-usecase.go:27.2,29.16 2 1
-e-commerce/domains/auth/usecases/auth-usecase.go:33.2,33.43 1 1
-e-commerce/domains/auth/usecases/auth-usecase.go:23.16,25.3 1 1
-e-commerce/domains/auth/usecases/auth-usecase.go:29.16,31.3 1 0
+e-commerce/domains/product/usecases/product-usecase.go:11.52,15.2 1 1
+e-commerce/domains/product/usecases/product-usecase.go:21.107,22.30 1 1
+e-commerce/domains/product/usecases/product-usecase.go:26.2,31.20 4 1
+e-commerce/domains/product/usecases/product-usecase.go:22.30,24.3 1 1
+e-commerce/domains/product/usecases/product-usecase.go:34.107,37.2 2 1

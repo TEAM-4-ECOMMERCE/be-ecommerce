@@ -8,7 +8,9 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	categorymodel "e-commerce/domains/category/model"
+	categoryModel "e-commerce/domains/category/model"
+	productmodel "e-commerce/domains/product/models"
+	usersmodel "e-commerce/domains/users/models"
 )
 
 func InitDB(cfg *config.AppConfig) *gorm.DB {
@@ -25,5 +27,9 @@ func InitDB(cfg *config.AppConfig) *gorm.DB {
 }
 
 func autoMigrate(db *gorm.DB) {
-	db.AutoMigrate(new(categorymodel.Category))
+	db.AutoMigrate(
+		new(categoryModel.Category),
+		new(usersmodel.User),
+		new(productmodel.Product),
+	)
 }

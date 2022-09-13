@@ -19,4 +19,5 @@ services:
       DB_PASS: ${DB_PASS}
       SERVER_PORT: ${SERVER_PORT}
       JWT_SECRET: ${JWT_SECRET}
+      BASE_URL: ${BASE_URL}
 
