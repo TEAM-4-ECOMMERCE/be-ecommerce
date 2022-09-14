@@ -25,14 +25,14 @@ type IusecaseProduct interface {
 	Store(cart CartEntity) (err error)
 	Update(cart CartEntity) (err error)
 	Delete(cart CartEntity) (err error)
-	GetList(cart CartEntity) (err error, result []CartEntity)
-	GetSingle(cart CartEntity) (err error, result CartEntity)
+	GetList(cart CartEntity) (result []CartEntity, err error)
+	GetSingle(cart CartEntity) (result CartEntity, err error)
 }
 
 type IrepoProduct interface {
 	Insert(cart CartEntity) (err error)
 	Update(cart CartEntity) (err error)
 	Delete(cart CartEntity) (err error)
-	FindAll(cart CartEntity) (err error, result []CartEntity)
-	Find(cart CartEntity) (err error, result CartEntity)
+	FindAll(cart CartEntity) (result []CartEntity, err error)
+	Find(cart CartEntity) (result CartEntity, err error)
 }
