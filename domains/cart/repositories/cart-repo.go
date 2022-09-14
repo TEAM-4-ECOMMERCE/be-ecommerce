@@ -35,7 +35,11 @@ func (r *cartRepo) Insert(cart entity.CartEntity) (affectedRow int, err error) {
 }
 
 func (r *cartRepo) Update(cart entity.CartEntity) (affectedRow int, err error) {
-	tx := r.DB.Model(&model.Cart{}).Where("id = ?", cart.CartID).Update("qty", cart.Qty)
+	cartModel := model.Cart{
+		Qty:      cart.Qty,
+		Subtotal: cart.Subtotal,
+	}
+	tx := r.DB.Model(&model.Cart{}).Where("id = ?", cart.CartID).Updates(&cartModel)
 
 	if tx.Error != nil {
 		return -1, tx.Error
@@ -74,6 +78,10 @@ func (r *cartRepo) FindAll(cart entity.CartEntity) (result []entity.CartEntity, 
 		return result, tx.Error
 	}
 
+	if len(cartModel) < 1 {
+		return result, nil
+	}
+
 	for _, cart := range cartModel {
 		result = append(result, model.ModelToEntity(cart))
 	}
@@ -85,11 +93,35 @@ func (r *cartRepo) Find(cart entity.CartEntity) (result entity.CartEntity, err e
 	cartModel := model.Cart{}
 	cartModel.ID = cart.CartID
 
-	tx := r.DB.Model(&model.Cart{}).Preload("Product").Where("user_id", cart.UserID).First(&cartModel)
+	tx := r.DB.Model(&model.Cart{}).Preload("Product")
+
+	if cart.UserID > 0 {
+		tx.Where("user_id = ?", cart.UserID)
+	}
+
+	if cart.ProductID > 0 {
+		tx.Where("product_id = ?", cart.ProductID)
+	}
+
+	tx.First(&cartModel)
 
 	if tx.Error != nil {
 		return result, tx.Error
 	}
 
 	return model.ModelToEntity(cartModel), nil
+}
+
+func (r *cartRepo) FindProduct(cart entity.CartEntity) (result entity.CartEntity, err error) {
+	productModel := model.Product{}
+	productModel.ID = cart.ProductID
+	tx := r.DB.Model(&model.Product{}).First(&productModel)
+
+	if tx.Error != nil {
+		return result, tx.Error
+	}
+
+	return entity.CartEntity{
+		Subtotal: productModel.Price,
+	}, nil
 }

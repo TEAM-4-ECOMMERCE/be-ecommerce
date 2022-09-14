@@ -18,7 +18,6 @@ type IusecaseCart interface {
 	Update(cart CartEntity) (err error)
 	Delete(cart CartEntity) (err error)
 	GetList(cart CartEntity) (result []CartEntity, err error)
-	GetSingle(cart CartEntity) (result CartEntity, err error)
 }
 
 type IrepoCart interface {
@@ -27,4 +26,5 @@ type IrepoCart interface {
 	Delete(cart CartEntity) (affectedRow int, err error)
 	FindAll(cart CartEntity) (result []CartEntity, err error)
 	Find(cart CartEntity) (result CartEntity, err error)
+	FindProduct(cart CartEntity) (result CartEntity, err error)
 }
