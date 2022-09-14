@@ -3,15 +3,13 @@ package usecase
 import (
 	users "e-commerce/domains/users/entity"
 	"errors"
-
-	"golang.org/x/crypto/bcrypt"
 )
 
 type useCase struct {
 	userData users.IuserInterface
 }
 
-func NewLogic(data users.IuserInterface) users.IuserInterface {
+func NewLogic(data users.IuserInterface) users.IusecaseUser {
 	return &useCase{
 		userData: data,
 	}
@@ -24,23 +22,18 @@ func (useCase *useCase) GetUser() ([]users.Users, error) {
 
 func (useCase *useCase) UpdateUser(dataUpdate users.Users) (int, error) {
 	dataMap := make(map[string]interface{})
-	if dataUpdate.Name != ""{
+	if dataUpdate.Name != "" {
 		dataMap["name"] = &dataUpdate.Name
 	}
-	if dataUpdate.Email != ""{
+	if dataUpdate.Email != "" {
 		dataMap["email"] = &dataUpdate.Email
 	}
-	if dataUpdate.Password != ""{
-		bytes, err := bcrypt.GenerateFromPassword([]byte(dataUpdate.Password), bcrypt.DefaultCost)
-		if err != nil {
-			return -1, errors.New("failed bcrypt the password")
-		}
-		dataMap["password"] = &bytes
+	if dataUpdate.ImageUrl != "" {
+		dataMap["image_url"] = &dataUpdate.Email
 	}
 
-
 	result, err := useCase.userData.UpdateUser(dataUpdate)
-	if err != nil{
+	if err != nil {
 		return 0, errors.New("user already register? you can't update if your account not listed")
 	}
 	return result, err
@@ -51,6 +44,5 @@ func (useCase *useCase) DeleteUser(dataDelete users.Users) (row int, err error) 
 	if err != nil {
 		return -1, errors.New("what you delete? register account first and then try again delete account")
 	}
-	return result , err 
+	return result, err
 }
-

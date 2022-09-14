@@ -13,7 +13,7 @@ func TestGetData(t *testing.T)()  {
 	repo := new(mocks.UsersRepository)
 	returnData := []users.Users{{UID: 1, Name: "Iqbal",Email: "iqbalinaja@yahoo.com",Password: "abogoboga"}}
 
-	t.Run("Succses Get Data", func(t *testing.T)  {
+	t.Run("Succses Get Data", func(t *testing.T) {
 		repo.On("SelectUser").Return(returnData, nil)
 
 		usecase := NewLogic(repo)
@@ -46,7 +46,7 @@ func TestDeleteData(t *testing.T)()  {
 	t.Run("Test Delete Data", func(t *testing.T) {
 		repo.On("DeleteUser", mock.Anything).Return(1, nil).Once()
 		data := users.Users{
-			Name:     "Ikebal",
+			Name: "Ikebal",
 		}
 		usercase := NewLogic(repo)
 		result, err := usercase.DeleteUser(data)

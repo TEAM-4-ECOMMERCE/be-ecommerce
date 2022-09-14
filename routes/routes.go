@@ -65,6 +65,10 @@ func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
 	*/
 	e.POST("/login", authHandler.Login)
 
+	e.POST("/products", productHandler.Store, middlewares.JWTMiddleware())
+	e.PUT("/product/:id", productHandler.Update, middlewares.JWTMiddleware())
+	e.DELETE("/product/:id", productHandler.Delete, middlewares.JWTMiddleware())
+	e.GET("/user/product", productHandler.ProductListUser, middlewares.JWTMiddleware())
 	e.GET("/products", productHandler.ProductList)
 	e.GET("/product/:id", productHandler.Product)
 

@@ -44,3 +44,15 @@ func ProductModelToEntity(productModel Product) entity.ProductEntity {
 		CategoryName: productModel.Category.Name,
 	}
 }
+
+func ProductEntityToModel(productEntity entity.ProductEntity) Product {
+	return Product{
+		UserID:      productEntity.UserID,
+		Name:        productEntity.Name,
+		Description: productEntity.Description,
+		ImageUrl:    productEntity.ImageUrl,
+		Price:       productEntity.Price,
+		Stock:       productEntity.Stock,
+		CategoryID:  productEntity.CategoryID,
+	}
+}

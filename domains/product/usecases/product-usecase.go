@@ -15,14 +15,32 @@ func New(repo entity.IrepoProduct) *productUsecase {
 }
 
 func (u *productUsecase) Store(product entity.ProductEntity) (err error) {
+	_, err = u.Repo.Insert(product)
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func (u *productUsecase) Update(product entity.ProductEntity) (err error) {
+	_, err = u.Repo.Update(product)
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func (u *productUsecase) Delete(product entity.ProductEntity) (err error) {
+	_, err = u.Repo.Delete(product)
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 

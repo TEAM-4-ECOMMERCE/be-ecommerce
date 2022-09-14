@@ -3,6 +3,7 @@ package productrepo
 import (
 	entity "e-commerce/domains/product/entity"
 	productModel "e-commerce/domains/product/models"
+	"errors"
 
 	"gorm.io/gorm"
 )
@@ -18,15 +19,51 @@ func New(db *gorm.DB) *productRepo {
 }
 
 func (r *productRepo) Insert(product entity.ProductEntity) (affectedRow int, err error) {
-	return 1, nil
+	entityModel := productModel.ProductEntityToModel(product)
+
+	tx := r.DB.Model(&productModel.Product{}).Create(&entityModel)
+
+	if tx.Error != nil {
+		return -1, tx.Error
+	}
+
+	if tx.RowsAffected < 1 {
+		return int(tx.RowsAffected), errors.New("data not inserted")
+	}
+
+	return int(tx.RowsAffected), nil
 }
 
 func (r *productRepo) Update(product entity.ProductEntity) (affectedRow int, err error) {
-	return 1, nil
+	entityModel := productModel.ProductEntityToModel(product)
+
+	tx := r.DB.Model(&productModel.Product{}).Where("id = ?", product.ProductID).Where("user_id = ?", product.UserID).Updates(&entityModel)
+
+	if tx.Error != nil {
+		return -1, tx.Error
+	}
+
+	if tx.RowsAffected < 1 {
+		return int(tx.RowsAffected), errors.New("data not updated")
+	}
+
+	return int(tx.RowsAffected), nil
 }
 
 func (r *productRepo) Delete(product entity.ProductEntity) (affectedRow int, err error) {
-	return 1, nil
+	entityModel := productModel.ProductEntityToModel(product)
+	entityModel.ID = product.ProductID
+	tx := r.DB.Model(&productModel.Product{}).Where("user_id = ?", product.UserID).Delete(&entityModel)
+
+	if tx.Error != nil {
+		return -1, tx.Error
+	}
+
+	if tx.RowsAffected < 1 {
+		return int(tx.RowsAffected), errors.New("data not deleted")
+	}
+
+	return int(tx.RowsAffected), nil
 }
 
 func (r *productRepo) FindAll(product entity.ProductEntity) (result []entity.ProductEntity, err error) {
