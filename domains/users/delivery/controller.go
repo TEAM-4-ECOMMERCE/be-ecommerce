@@ -42,7 +42,7 @@ func (control *UserControl) GetUser(c echo.Context) error {
 		}
 	}
 
-	if err != nil && userResult.Id < 1 {
+	if err != nil || userResult.Id < 1 {
 		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("error get data"))
 	}
 	return c.JSON(http.StatusOK, helpers.SuccessGetResponse("success", userResult))
