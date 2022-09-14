@@ -2,9 +2,9 @@ package middlewares
 
 import (
 	"e-commerce/config"
+	"fmt"
 	"log"
 	"time"
-	"fmt"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
@@ -23,7 +23,7 @@ func CreateToken(userID uint) (string, error) {
 	cfg := config.GetConfig()
 	claims := jwt.MapClaims{}
 	claims["userID"] = userID
-	claims["exp"] = time.Now().Add(1 * time.Hour).Unix()
+	claims["exp"] = time.Now().Add(24 * time.Hour).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(cfg.JWT_SECRET))

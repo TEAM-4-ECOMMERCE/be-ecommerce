@@ -43,7 +43,7 @@ type Category struct {
 
 func EntityToModel(entity entity.CartEntity) Cart {
 	return Cart{
-		ProductID: entity.UserID,
+		ProductID: entity.ProductID,
 		UserID:    entity.UserID,
 		Qty:       entity.Qty,
 		Subtotal:  entity.Subtotal,

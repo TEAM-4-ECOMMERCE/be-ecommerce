@@ -8,6 +8,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
+	cartModel "e-commerce/domains/cart/models"
 	categoryModel "e-commerce/domains/category/model"
 	productmodel "e-commerce/domains/product/models"
 	users "e-commerce/domains/users/data"
@@ -31,5 +32,6 @@ func autoMigrate(db *gorm.DB) {
 		new(categoryModel.Category),
 		new(users.User),
 		new(productmodel.Product),
+		new(cartModel.Cart),
 	)
 }
