@@ -18,6 +18,14 @@ import (
 	carthandler "e-commerce/domains/cart/handlers"
 	cartrepo "e-commerce/domains/cart/repositories"
 	cartusecase "e-commerce/domains/cart/usecases"
+
+	registerrepo "e-commerce/domains/register/data"
+	registerhandler "e-commerce/domains/register/delivery"
+	registerusecase "e-commerce/domains/register/usecase"
+
+	usersrepo "e-commerce/domains/users/data"
+	usershandler "e-commerce/domains/users/delivery"
+	usersusecase "e-commerce/domains/users/usecase"
 )
 
 func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
@@ -35,6 +43,14 @@ func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
 	cartRepo := cartrepo.New(db)
 	cartUsecase := cartusecase.New(cartRepo)
 	cartHandler := carthandler.New(cartUsecase)
+
+	registerRepo := registerrepo.NewRegister(db)
+	registerUsecase := registerusecase.NewLogic(registerRepo)
+	registerhandler.NewController(e, registerUsecase)
+
+	usersRepo := usersrepo.NewDataBase(db)
+	usersUsecase := usersusecase.NewLogic(usersRepo)
+	usershandler.NewController(e, usersUsecase)
 
 	/*
 		Routes

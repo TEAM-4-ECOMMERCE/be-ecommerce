@@ -11,6 +11,7 @@ type User struct {
 	Name     string
 	Email    string
 	Password string
+	ImageUrl string
 
 	Cart []Cart
 }
@@ -48,6 +49,7 @@ func FromCore(dataCore users.Users) User {
 		Name:     dataCore.Name,
 		Email:    dataCore.Email,
 		Password: dataCore.Password,
+		ImageUrl: dataCore.ImageUrl,
 	}
 	return dataModel
 }
@@ -58,6 +60,7 @@ func (data *User) ToCore() users.Users {
 		Name:     data.Name,
 		Email:    data.Email,
 		Password: data.Password,
+		ImageUrl: data.ImageUrl,
 	}
 }
 
