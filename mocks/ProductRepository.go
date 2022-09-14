@@ -13,90 +13,132 @@ type ProductRepoMock struct {
 	mock.Mock
 }
 
-// Delete provides a mock function with given fields: cart
-func (_m *ProductRepoMock) Delete(cart productentity.ProductEntity) error {
-	ret := _m.Called(cart)
+// CountData provides a mock function with given fields: uid
+func (_m *ProductRepoMock) CountData(uid uint) (uint, error) {
+	ret := _m.Called(uid)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(productentity.ProductEntity) error); ok {
-		r0 = rf(cart)
+	var r0 uint
+	if rf, ok := ret.Get(0).(func(uint) uint); ok {
+		r0 = rf(uid)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(uint)
 	}
 
-	return r0
-}
-
-// Find provides a mock function with given fields: cart
-func (_m *ProductRepoMock) Find(cart productentity.ProductEntity) (error, productentity.ProductEntity) {
-	ret := _m.Called(cart)
-
-	var r0 error
-	if rf, ok := ret.Get(0).(func(productentity.ProductEntity) error); ok {
-		r0 = rf(cart)
+	var r1 error
+	if rf, ok := ret.Get(1).(func(uint) error); ok {
+		r1 = rf(uid)
 	} else {
-		r0 = ret.Error(0)
-	}
-
-	var r1 productentity.ProductEntity
-	if rf, ok := ret.Get(1).(func(productentity.ProductEntity) productentity.ProductEntity); ok {
-		r1 = rf(cart)
-	} else {
-		r1 = ret.Get(1).(productentity.ProductEntity)
+		r1 = ret.Error(1)
 	}
 
 	return r0, r1
 }
 
-// FindAll provides a mock function with given fields: cart
-func (_m *ProductRepoMock) FindAll(cart productentity.ProductEntity) (error, []productentity.ProductEntity) {
-	ret := _m.Called(cart)
+// Delete provides a mock function with given fields: product
+func (_m *ProductRepoMock) Delete(product productentity.ProductEntity) (int, error) {
+	ret := _m.Called(product)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(productentity.ProductEntity) error); ok {
-		r0 = rf(cart)
+	var r0 int
+	if rf, ok := ret.Get(0).(func(productentity.ProductEntity) int); ok {
+		r0 = rf(product)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(int)
 	}
 
-	var r1 []productentity.ProductEntity
-	if rf, ok := ret.Get(1).(func(productentity.ProductEntity) []productentity.ProductEntity); ok {
-		r1 = rf(cart)
+	var r1 error
+	if rf, ok := ret.Get(1).(func(productentity.ProductEntity) error); ok {
+		r1 = rf(product)
 	} else {
-		if ret.Get(1) != nil {
-			r1 = ret.Get(1).([]productentity.ProductEntity)
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// Find provides a mock function with given fields: product
+func (_m *ProductRepoMock) Find(product productentity.ProductEntity) (productentity.ProductEntity, error) {
+	ret := _m.Called(product)
+
+	var r0 productentity.ProductEntity
+	if rf, ok := ret.Get(0).(func(productentity.ProductEntity) productentity.ProductEntity); ok {
+		r0 = rf(product)
+	} else {
+		r0 = ret.Get(0).(productentity.ProductEntity)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(productentity.ProductEntity) error); ok {
+		r1 = rf(product)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// FindAll provides a mock function with given fields: product
+func (_m *ProductRepoMock) FindAll(product productentity.ProductEntity) ([]productentity.ProductEntity, error) {
+	ret := _m.Called(product)
+
+	var r0 []productentity.ProductEntity
+	if rf, ok := ret.Get(0).(func(productentity.ProductEntity) []productentity.ProductEntity); ok {
+		r0 = rf(product)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]productentity.ProductEntity)
 		}
 	}
 
+	var r1 error
+	if rf, ok := ret.Get(1).(func(productentity.ProductEntity) error); ok {
+		r1 = rf(product)
+	} else {
+		r1 = ret.Error(1)
+	}
+
 	return r0, r1
 }
 
-// Insert provides a mock function with given fields: cart
-func (_m *ProductRepoMock) Insert(cart productentity.ProductEntity) error {
-	ret := _m.Called(cart)
+// Insert provides a mock function with given fields: product
+func (_m *ProductRepoMock) Insert(product productentity.ProductEntity) (int, error) {
+	ret := _m.Called(product)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(productentity.ProductEntity) error); ok {
-		r0 = rf(cart)
+	var r0 int
+	if rf, ok := ret.Get(0).(func(productentity.ProductEntity) int); ok {
+		r0 = rf(product)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(int)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(productentity.ProductEntity) error); ok {
+		r1 = rf(product)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
-// Update provides a mock function with given fields: cart
-func (_m *ProductRepoMock) Update(cart productentity.ProductEntity) error {
-	ret := _m.Called(cart)
+// Update provides a mock function with given fields: product
+func (_m *ProductRepoMock) Update(product productentity.ProductEntity) (int, error) {
+	ret := _m.Called(product)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(productentity.ProductEntity) error); ok {
-		r0 = rf(cart)
+	var r0 int
+	if rf, ok := ret.Get(0).(func(productentity.ProductEntity) int); ok {
+		r0 = rf(product)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(int)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(productentity.ProductEntity) error); ok {
+		r1 = rf(product)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 type mockConstructorTestingTNewProductRepoMock interface {

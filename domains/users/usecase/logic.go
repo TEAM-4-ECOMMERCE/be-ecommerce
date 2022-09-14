@@ -17,8 +17,8 @@ func NewLogic(data users.IuserInterface) users.IuserInterface {
 	}
 }
 
-func (useCase *useCase) SelectUser() ([]users.Users, error) {
-	result, err := useCase.userData.SelectUser()
+func (useCase *useCase) GetUser() ([]users.Users, error) {
+	result, err := useCase.userData.GetUser()
 	return result, err
 }
 

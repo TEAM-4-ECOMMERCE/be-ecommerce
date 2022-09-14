@@ -14,89 +14,131 @@ type CartRepoMock struct {
 }
 
 // Delete provides a mock function with given fields: cart
-func (_m *CartRepoMock) Delete(cart cartentity.CartEntity) error {
+func (_m *CartRepoMock) Delete(cart cartentity.CartEntity) (int, error) {
 	ret := _m.Called(cart)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) error); ok {
+	var r0 int
+	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) int); ok {
 		r0 = rf(cart)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(int)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(cartentity.CartEntity) error); ok {
+		r1 = rf(cart)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // Find provides a mock function with given fields: cart
-func (_m *CartRepoMock) Find(cart cartentity.CartEntity) (error, cartentity.CartEntity) {
+func (_m *CartRepoMock) Find(cart cartentity.CartEntity) (cartentity.CartEntity, error) {
 	ret := _m.Called(cart)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) error); ok {
+	var r0 cartentity.CartEntity
+	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) cartentity.CartEntity); ok {
 		r0 = rf(cart)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(cartentity.CartEntity)
 	}
 
-	var r1 cartentity.CartEntity
-	if rf, ok := ret.Get(1).(func(cartentity.CartEntity) cartentity.CartEntity); ok {
+	var r1 error
+	if rf, ok := ret.Get(1).(func(cartentity.CartEntity) error); ok {
 		r1 = rf(cart)
 	} else {
-		r1 = ret.Get(1).(cartentity.CartEntity)
+		r1 = ret.Error(1)
 	}
 
 	return r0, r1
 }
 
 // FindAll provides a mock function with given fields: cart
-func (_m *CartRepoMock) FindAll(cart cartentity.CartEntity) (error, []cartentity.CartEntity) {
+func (_m *CartRepoMock) FindAll(cart cartentity.CartEntity) ([]cartentity.CartEntity, error) {
 	ret := _m.Called(cart)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) error); ok {
+	var r0 []cartentity.CartEntity
+	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) []cartentity.CartEntity); ok {
 		r0 = rf(cart)
 	} else {
-		r0 = ret.Error(0)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]cartentity.CartEntity)
+		}
 	}
 
-	var r1 []cartentity.CartEntity
-	if rf, ok := ret.Get(1).(func(cartentity.CartEntity) []cartentity.CartEntity); ok {
+	var r1 error
+	if rf, ok := ret.Get(1).(func(cartentity.CartEntity) error); ok {
 		r1 = rf(cart)
 	} else {
-		if ret.Get(1) != nil {
-			r1 = ret.Get(1).([]cartentity.CartEntity)
-		}
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// FindProduct provides a mock function with given fields: cart
+func (_m *CartRepoMock) FindProduct(cart cartentity.CartEntity) (cartentity.CartEntity, error) {
+	ret := _m.Called(cart)
+
+	var r0 cartentity.CartEntity
+	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) cartentity.CartEntity); ok {
+		r0 = rf(cart)
+	} else {
+		r0 = ret.Get(0).(cartentity.CartEntity)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(cartentity.CartEntity) error); ok {
+		r1 = rf(cart)
+	} else {
+		r1 = ret.Error(1)
 	}
 
 	return r0, r1
 }
 
 // Insert provides a mock function with given fields: cart
-func (_m *CartRepoMock) Insert(cart cartentity.CartEntity) error {
+func (_m *CartRepoMock) Insert(cart cartentity.CartEntity) (int, error) {
 	ret := _m.Called(cart)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) error); ok {
+	var r0 int
+	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) int); ok {
 		r0 = rf(cart)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(int)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(cartentity.CartEntity) error); ok {
+		r1 = rf(cart)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // Update provides a mock function with given fields: cart
-func (_m *CartRepoMock) Update(cart cartentity.CartEntity) error {
+func (_m *CartRepoMock) Update(cart cartentity.CartEntity) (int, error) {
 	ret := _m.Called(cart)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) error); ok {
+	var r0 int
+	if rf, ok := ret.Get(0).(func(cartentity.CartEntity) int); ok {
 		r0 = rf(cart)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(int)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(cartentity.CartEntity) error); ok {
+		r1 = rf(cart)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 type mockConstructorTestingTNewCartRepoMock interface {

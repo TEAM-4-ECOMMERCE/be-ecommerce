@@ -2,6 +2,7 @@ package data
 
 import (
 	reg "e-commerce/domains/register/entity"
+	data "e-commerce/domains/register/data"
 	"e-commerce/middlewares"
 	"strconv"
 
@@ -21,7 +22,7 @@ func NewRegister(db *gorm.DB) reg.IregisterInterface{
 }
 
 func (file *Receive) CreateUser(dataCreate reg.Registers) (int, error) {
-	UserModel := FromCoreRegister(dataCreate)
+	UserModel := data.FromCoreRegister(dataCreate)
 	tx := file.db.Create(&UserModel)
 	if tx.Error != nil {
 		return 0, tx.Error

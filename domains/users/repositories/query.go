@@ -1,7 +1,8 @@
 package data
 
 import (
-	"e-commerce/domains/users/entity"
+	users "e-commerce/domains/users/entity"
+	models "e-commerce/domains/users/data"
 	"errors"
 
 	"gorm.io/gorm"
@@ -17,18 +18,18 @@ func NewDataBase(db *gorm.DB) users.IuserInterface {
 	}
 }
 
-func (file *DataUser)SelectUser() ([]users.Users, error)  {
-	var data []User
+func (file *DataUser)GetUser() ([]users.Users, error)  {
+	var data []models.User
 	tx := file.db.Find(&data)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
-	Users := CoreList(data)
+	Users := models.CoreList(data)
 	return Users, nil
 }
 
 func (file *DataUser) DeleteUser(dataDelete users.Users) (int, error)  {
-	tx := file.db.Delete(&User{})
+	tx := file.db.Delete(&models.User{})
 	if tx.Error != nil {
 		return -1, tx.Error
 	}
@@ -39,7 +40,7 @@ func (file *DataUser) DeleteUser(dataDelete users.Users) (int, error)  {
 }
 
 func (file *DataUser)UpdateUser(dataUpdate users.Users) (int, error)  {
-	tx := file.db.Model(&User{}).Updates(FromCore(dataUpdate))
+	tx := file.db.Model(&models.User{}).Updates(models.FromCore(dataUpdate))
 	if tx.Error != nil {
 		return -1, tx.Error
 	}

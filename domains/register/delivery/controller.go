@@ -13,6 +13,12 @@ type RegisterControl struct{
 	RegisterInterface reg.IregisterInterface
 }
 
+func NewController(logic reg.IregisterInterface) *RegisterControl{
+	return &RegisterControl{
+		RegisterInterface: logic,
+	}
+}
+
 func (control *RegisterControl) CreateUser(c echo.Context) error {
 	userToken, errToken := middlewares.ExtractToken(c)
 	if userToken == 0 || errToken != nil{
@@ -28,13 +34,4 @@ func (control *RegisterControl) CreateUser(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("error create data"))
 	}
 	return c.JSON(http.StatusCreated, helpers.SuccessGetResponse("success create data", userToken))
-}
-
-func NewController(e *echo.Echo, logic reg.IregisterInterface) {
-	controller := &RegisterControl{
-		RegisterInterface: logic,
-	}
-
-	e.POST("/register", controller.CreateUser, middlewares.JWTMiddleware())
-
 }

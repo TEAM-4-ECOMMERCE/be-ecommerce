@@ -2,37 +2,29 @@ package cartentity
 
 type CartEntity struct {
 	CartID            uint
+	ProductID         uint
 	UserID            uint
+	ProductName       string
+	ProductImageUrl   string
+	ProductPrice      float64
 	Qty               uint
 	Subtotal          float64
-	Product           ProductEntity
 	TotalOrderProduct uint
-	GrandTotal        float64	
+	GrandTotal        float64
 }
 
-type ProductEntity struct {
-	ProductID  uint
-	CategoryID uint
-	UserID     uint
-	Name       string
-	Price      float64
-	Stock      uint
-	Desc       string
-	Image      string
-}
-
-type IusecaseProduct interface {
+type IusecaseCart interface {
 	Store(cart CartEntity) (err error)
 	Update(cart CartEntity) (err error)
 	Delete(cart CartEntity) (err error)
-	GetList(cart CartEntity) (err error, result []CartEntity)
-	GetSingle(cart CartEntity) (err error, result CartEntity)
+	GetList(cart CartEntity) (result []CartEntity, err error)
 }
 
-type IrepoProduct interface {
-	Insert(cart CartEntity) (err error)
-	Update(cart CartEntity) (err error)
-	Delete(cart CartEntity) (err error)
-	FindAll(cart CartEntity) (err error, result []CartEntity)
-	Find(cart CartEntity) (err error, result CartEntity)
+type IrepoCart interface {
+	Insert(cart CartEntity) (affectedRow int, err error)
+	Update(cart CartEntity) (affectedRow int, err error)
+	Delete(cart CartEntity) (affectedRow int, err error)
+	FindAll(cart CartEntity) (result []CartEntity, err error)
+	Find(cart CartEntity) (result CartEntity, err error)
+	FindProduct(cart CartEntity) (result CartEntity, err error)
 }
