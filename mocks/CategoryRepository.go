@@ -13,8 +13,8 @@ type CategoryRepository struct {
 	mock.Mock
 }
 
-// SelectCategory provides a mock function with given fields:
-func (_m *CategoryRepository) SelectCategory() ([]entity.CategoryEntity, error) {
+// GetCategory provides a mock function with given fields:
+func (_m *CategoryRepository) GetCategory() ([]entity.CategoryEntity, error) {
 	ret := _m.Called()
 
 	var r0 []entity.CategoryEntity

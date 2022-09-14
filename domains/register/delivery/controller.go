@@ -9,17 +9,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type RegisterControl struct{
+type registercontrol struct{
 	RegisterInterface reg.IregisterInterface
 }
 
-func NewController(logic reg.IregisterInterface) *RegisterControl{
-	return &RegisterControl{
+func NewController(logic reg.IregisterInterface) *registercontrol{
+	return &registercontrol{
 		RegisterInterface: logic,
 	}
 }
 
-func (control *RegisterControl) CreateUser(c echo.Context) error {
+func (control *registercontrol) CreateUser(c echo.Context) error {
 	userToken, errToken := middlewares.ExtractToken(c)
 	if userToken == 0 || errToken != nil{
 		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("token nya tuan !"))

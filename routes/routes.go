@@ -26,6 +26,10 @@ import (
 	registercontrol "e-commerce/domains/register/delivery"
 	registerrepo "e-commerce/domains/register/repositories"
 	registerusecase	"e-commerce/domains/register/usecase"
+
+	categorycontrol "e-commerce/domains/category/delivery"
+	categoryrepo	"e-commerce/domains/category/repositories"
+	categoryusecase	"e-commerce/domains/category/usecase"
 )
 
 func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
@@ -52,6 +56,10 @@ func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
 	registerUsecase := registerusecase.NewLogic(registerRepo)
 	registerControl := registercontrol.NewController(registerUsecase)
 
+	categoryRepo := categoryrepo.New(db)
+	categoryUsecase := categoryusecase.New(categoryRepo)
+	categoryControl := categorycontrol.New(categoryUsecase)
+
 	/*
 		Routes
 	*/
@@ -70,4 +78,6 @@ func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
 	e.POST("/users", usersControl.UpdateUser,middlewares.JWTMiddleware())
 
 	e.POST("/register", registerControl.CreateUser,middlewares.JWTMiddleware())
+
+	e.GET("/category", categoryControl.GetAllCategory,middlewares.JWTMiddleware())
 }
