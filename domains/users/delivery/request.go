@@ -8,16 +8,16 @@ type UserRequest struct{
 	Password	string	`json:"password" form:"password"`
 }
 
-func fromCoreRequest(data UserRequest) users.UserCore {
-	return users.UserCore{
+func fromCoreRequest(data UserRequest) users.Users {
+	return users.Users{
 		Name: data.Name,
 		Email: data.Email,
 		Password: data.Password,
 	}
 }
 
-func toCoreRequest(data UserRequest) users.UserCore {
-	return users.UserCore{
+func toCoreRequest(data UserRequest) users.Users {
+	return users.Users{
 		Name: data.Name,
 		Email: data.Email,
 		Password: data.Password,

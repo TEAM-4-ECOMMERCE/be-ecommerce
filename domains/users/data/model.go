@@ -15,7 +15,7 @@ type User struct {
 
 
 
-func FromCore(dataCore users.UserCore) User {
+func FromCore(dataCore users.Users) User {
 	dataModel := User{
 		Name: dataCore.Name,
 		Email: dataCore.Email,
@@ -24,8 +24,8 @@ func FromCore(dataCore users.UserCore) User {
 	return dataModel
 }
 
-func (data *User) ToCore () users.UserCore  {
-	return users.UserCore{
+func (data *User) ToCore () users.Users {
+	return users.Users{
 		UID: 		int(data.ID),
 		Name: 		data.Name,
 		Email: 		data.Email,
@@ -33,8 +33,8 @@ func (data *User) ToCore () users.UserCore  {
 	}
 }
 
-func CoreList(data []User) []users.UserCore {
-	var DataCore []users.UserCore
+func CoreList(data []User) []users.Users{
+	var DataCore []users.Users
 	for key := range data {
 		DataCore = append(DataCore, data[key].ToCore())
 	}

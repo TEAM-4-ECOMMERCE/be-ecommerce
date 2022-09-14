@@ -7,7 +7,7 @@ type CartEntity struct {
 	Subtotal          float64
 	Product           ProductEntity
 	TotalOrderProduct uint
-	GrandTotal        float64
+	GrandTotal        float64	
 }
 
 type ProductEntity struct {

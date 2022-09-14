@@ -11,23 +11,23 @@ type DataUser struct {
 	db *gorm.DB
 }
 
-func NewDataBase(db *gorm.DB) users.UserInterface {
+func NewDataBase(db *gorm.DB) users.IuserInterface {
 	return &DataUser {
 		db: db,
 	}
 }
 
-func (file *DataUser)GetUser() ([]users.UserCore, error)  {
+func (file *DataUser)SelectUser() ([]users.Users, error)  {
 	var data []User
 	tx := file.db.Find(&data)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
-	UserCore := CoreList(data)
-	return UserCore, nil
+	Users := CoreList(data)
+	return Users, nil
 }
 
-func (file *DataUser) DeleteUser(dataDelete users.UserCore) (int, error)  {
+func (file *DataUser) DeleteUser(dataDelete users.Users) (int, error)  {
 	tx := file.db.Delete(&User{})
 	if tx.Error != nil {
 		return -1, tx.Error
@@ -38,7 +38,7 @@ func (file *DataUser) DeleteUser(dataDelete users.UserCore) (int, error)  {
 	return int(tx.RowsAffected), nil
 }
 
-func (file *DataUser)UpdateUser(dataUpdate users.UserCore) (int, error)  {
+func (file *DataUser)UpdateUser(dataUpdate users.Users) (int, error)  {
 	tx := file.db.Model(&User{}).Updates(FromCore(dataUpdate))
 	if tx.Error != nil {
 		return -1, tx.Error

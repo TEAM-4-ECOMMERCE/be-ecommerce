@@ -2,7 +2,7 @@ package users
 
 import "time"
 
-type UserCore struct {
+type Users struct {
 	UID			int
 	Name		string
 	Email		string
@@ -11,16 +11,15 @@ type UserCore struct {
 	UpdatedAt	time.Time
 }
 
-type UserInterface interface {
-	GetUser() (data []UserCore, err error)
-	DeleteUser (dataUpdate UserCore) (row int, err error)
+type IusecaseUser interface{
+	GetUser() (data []Users, err error)
+	DeleteUser (dataDelete Users) (row int, err error)
+	UpdateUser (dataUpdate Users) (row int, err error)
 }
 
-// type DataInterface interface {
-// 	SelectData() (data []UserCore, err error)
-// 	CreateData (dataCreate UserCore) (row int, err error)
-// 	DeleteData (dataDelete UserCore) (row int, err error)
-// 	UpdateData (dataUpdate UserCore) (row int, err error)
-// }
-
+type IuserInterface interface {
+	SelectUser() (data []Users, err error)
+	DeleteUser (dataDelete Users) (row int, err error)
+	UpdateUser (dataUpdate Users) (row int, err error)
+}
 
