@@ -14,7 +14,6 @@ type User struct {
 }
 
 
-
 func FromCore(dataCore users.Users) User {
 	dataModel := User{
 		Name: dataCore.Name,

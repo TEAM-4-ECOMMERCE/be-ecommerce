@@ -17,14 +17,18 @@ func NewController(e *echo.Echo, logic users.IusecaseUser) {
 	controller := &UserControl{
 		UserInterface: logic,
 	}
-	e.GET("/users",controller.GetUser)    //Need JWT
-	e.GET("/users",controller.DeleteUser, middlewares.JWTMiddleware()) //Need JWT
+	e.GET("/users",controller.GetUser, middlewares.JWTMiddleware())    
+	e.GET("/users",controller.DeleteUser, middlewares.JWTMiddleware()) 
 	e.POST("/users", controller.UpdateUser, middlewares.JWTMiddleware())
 
 }
 
 
 func (control *UserControl) GetUser(c echo.Context) error {
+	userToken, errToken := middlewares.ExtractToken(c)
+	if userToken == 0 || errToken != nil{
+		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("token nya tuan !"))
+	}
 	results, err := control.UserInterface.GetUser()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("error get data"))
