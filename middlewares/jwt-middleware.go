@@ -4,6 +4,7 @@ import (
 	"e-commerce/config"
 	"log"
 	"time"
+	"fmt"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
@@ -28,7 +29,7 @@ func CreateToken(userID uint) (string, error) {
 	return token.SignedString([]byte(cfg.JWT_SECRET))
 }
 
-func ExtractToken(c echo.Context) (uid float64) {
+func ExtractToken(c echo.Context) (int, error) {
 	token, ok := c.Get("user").(*jwt.Token)
 
 	if !ok {
@@ -38,8 +39,8 @@ func ExtractToken(c echo.Context) (uid float64) {
 	if token.Valid {
 		claim := token.Claims.(jwt.MapClaims)
 		uid := claim["userID"].(float64)
-		return uid
+		return int(uid), nil
 	}
 
-	return -1
+	return 0, fmt.Errorf("token invalid")
 }

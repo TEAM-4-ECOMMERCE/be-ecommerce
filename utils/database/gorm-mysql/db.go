@@ -9,6 +9,7 @@ import (
 	"gorm.io/gorm"
 
 	categorymodel "e-commerce/domains/category/model"
+	users "e-commerce/domains/users/entity"
 )
 
 func InitDB(cfg *config.AppConfig) *gorm.DB {
@@ -26,4 +27,5 @@ func InitDB(cfg *config.AppConfig) *gorm.DB {
 
 func autoMigrate(db *gorm.DB) {
 	db.AutoMigrate(new(categorymodel.Category))
+	db.AutoMigrate(new(users.Users))
 }
