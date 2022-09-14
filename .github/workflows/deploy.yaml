@@ -1,37 +1,33 @@
-# name: deploy to EC2
+name: deploy to EC2
 
-# on:
-#   push:
-#     branches: 
-#       - main
+on:
+  push:
+    branches: 
+      - main
 
-# jobs:
-#   build:
-#     name: build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: connect to the server and deploy
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{ secrets.HOST }}
-#           username: ${{ secrets.USERNAME }}
-#           key: ${{ secrets.KEY }}
-#           port: ${{ secrets.PORT }}
-#           script: |
-#             cd /home/ubuntu/be-ecommerce
-#             git pull origin main
-#             go mod tidy
-#             docker compose down
-#             docker rmi ecommerceapp
-#             export DB_NAME=${{ secrets.DB_NAME }}
-#             export DB_HOST=${{ secrets.DB_HOST }}
-#             export DB_PORT=${{ secrets.DB_PORT }}
-#             export DB_USER=${{ secrets.DB_USER }}
-#             export DB_PASS=${{ secrets.DB_PASSWORD }}
-#             export SERVER_PORT=${{ secrets.SERVER_PORT }}
-#             export JWT_SECRET=${{ secrets.JWT_TOKEN }}
-#             docker compose up -d
-
-############
-#####SPAM###
-############
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: connect to the server and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/ubuntu/be-ecommerce
+            git pull origin main
+            go mod tidy
+            docker compose down
+            docker rmi ecommerceapp
+            export DB_NAME=${{ secrets.DB_NAME }}
+            export DB_HOST=${{ secrets.DB_HOST }}
+            export DB_PORT=${{ secrets.DB_PORT }}
+            export DB_USER=${{ secrets.DB_USER }}
+            export DB_PASS=${{ secrets.DB_PASSWORD }}
+            export SERVER_PORT=${{ secrets.SERVER_PORT }}
+            export JWT_SECRET=${{ secrets.JWT_TOKEN }}
+            docker compose up -d
