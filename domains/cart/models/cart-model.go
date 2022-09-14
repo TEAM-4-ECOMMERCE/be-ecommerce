@@ -1,6 +1,10 @@
 package cartmodel
 
-import "gorm.io/gorm"
+import (
+	entity "e-commerce/domains/cart/entity"
+
+	"gorm.io/gorm"
+)
 
 type Cart struct {
 	gorm.Model
@@ -35,4 +39,25 @@ type Product struct {
 type Category struct {
 	gorm.Model
 	Name string
+}
+
+func EntityToModel(entity entity.CartEntity) Cart {
+	return Cart{
+		ProductID: entity.UserID,
+		UserID:    entity.UserID,
+		Qty:       entity.Qty,
+		Subtotal:  entity.Subtotal,
+	}
+}
+
+func ModelToEntity(model Cart) entity.CartEntity {
+	return entity.CartEntity{
+		CartID:          model.ID,
+		ProductID:       model.ID,
+		ProductName:     model.Product.Name,
+		ProductPrice:    model.Product.Price,
+		ProductImageUrl: model.Product.ImageUrl,
+		Qty:             model.Qty,
+		Subtotal:        float64(model.Qty) * model.Product.Price,
+	}
 }
