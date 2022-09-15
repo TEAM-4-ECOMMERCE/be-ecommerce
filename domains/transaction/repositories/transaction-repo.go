@@ -30,6 +30,7 @@ func (r *transactionRepo) Insert(transaction entity.TransactionEntity) (err erro
 		Name:   transaction.CreditCard.NameOfCard,
 		Number: transaction.CreditCard.NumberCard,
 		CVV:    transaction.CreditCard.CVV,
+		Date:   transaction.CreditCard.ExpiredDate,
 	}
 
 	tx := r.DB.Model(&model.Address{}).Create(&addressModel)
