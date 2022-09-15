@@ -38,6 +38,7 @@ type CreditCardResponse struct {
 	Visa         string  `json:"visa"`
 	NameOfCard   string  `json:"name_of_card"`
 	NumberCard   string  `json:"number_card"`
+	CVV          string  `json:"cvv"`
 	ExpiredDate  float64 `json:"expired_date"`
 }
 
@@ -86,6 +87,7 @@ func EntityToResponseSingle(Entity entity.TransactionEntity) SingleResponse {
 			NumberCard:   Entity.CreditCard.NumberCard,
 			NameOfCard:   Entity.CreditCard.NameOfCard,
 			ExpiredDate:  Entity.CreditCard.ExpiredDate,
+			CVV:          Entity.CreditCard.CVV,
 		},
 		TransactionDetail: ListDetailTransaction,
 	}
