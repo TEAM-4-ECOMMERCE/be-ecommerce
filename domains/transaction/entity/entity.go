@@ -6,7 +6,7 @@ type TransactionEntity struct {
 	TransactionCode   string
 	GrandTotal        float64
 	StatusTransaction string
-	TransactionDate   float64
+	TransactionDate   int64
 	Address           AddressEntity
 	CreditCard        CreditCardEntity
 	TransactionDetail []TransactionDetailEntity

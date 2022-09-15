@@ -10,7 +10,7 @@ type ListResponse struct {
 	TransactionCode   string  `json:"transaction_code"`
 	GrandTotal        float64 `json:"grand_total"`
 	StatusTransaction string  `json:"status_order"`
-	TransactionDate   float64 `json:"transaction_date"`
+	TransactionDate   int64   `json:"transaction_date"`
 }
 
 type SingleResponse struct {
@@ -19,7 +19,7 @@ type SingleResponse struct {
 	TransactionCode   string                      `json:"transaction_code"`
 	GrandTotal        float64                     `json:"grand_total"`
 	StatusTransaction string                      `json:"status"`
-	TransactionDate   float64                     `json:"transaction_date"`
+	TransactionDate   int64                       `json:"transaction_date"`
 	Address           AddressResponse             `json:"address"`
 	CreditCard        CreditCardResponse          `json:"credit_card"`
 	TransactionDetail []TransactionDetailResponse `json:"products"`

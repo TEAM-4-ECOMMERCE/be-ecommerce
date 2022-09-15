@@ -17,7 +17,7 @@ type StoreRequest struct {
 }
 
 type UpdateRequest struct {
-	Status string
+	Status string `json:"status"`
 }
 
 func RequestToEntity(request StoreRequest) entity.TransactionEntity {

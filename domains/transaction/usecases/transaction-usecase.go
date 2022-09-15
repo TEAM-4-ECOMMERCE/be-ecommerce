@@ -3,6 +3,8 @@ package transactionusecase
 import (
 	entity "e-commerce/domains/transaction/entity"
 	"e-commerce/utils/helpers"
+	"errors"
+	"time"
 )
 
 type transactionUsecase struct {
@@ -23,6 +25,10 @@ func (u *transactionUsecase) Store(transaction entity.TransactionEntity) (err er
 		return err
 	}
 
+	if len(carts) < 1 {
+		return errors.New("nothing on this cart")
+	}
+
 	transaction.TransactionDetail = carts
 
 	lastID, err := u.Usecase.FindLastInsertedId()
@@ -31,7 +37,15 @@ func (u *transactionUsecase) Store(transaction entity.TransactionEntity) (err er
 		return err
 	}
 
+	var grandTotal float64
+	for _, cart := range carts {
+		grandTotal += cart.Subtotal
+	}
+
 	transaction.TransactionCode = helpers.TFCode(uint(lastID))
+	transaction.StatusTransaction = "on_delivery"
+	transaction.GrandTotal = grandTotal
+	transaction.TransactionDate = int64(time.Now().Unix())
 
 	err = u.Usecase.Insert(transaction)
 
@@ -61,6 +75,10 @@ func (u *transactionUsecase) Update(transaction entity.TransactionEntity) (err e
 func (u *transactionUsecase) GetList(transaction entity.TransactionEntity) (result []entity.TransactionEntity, err error) {
 	transactionList, err := u.Usecase.FindAll(transaction)
 
+	if err != nil {
+		return result, err
+	}
+
 	for _, transaction := range transactionList {
 		var grandTotal float64
 		for _, detailTransaction := range transaction.TransactionDetail {
@@ -69,20 +87,9 @@ func (u *transactionUsecase) GetList(transaction entity.TransactionEntity) (resu
 		transaction.GrandTotal = grandTotal
 	}
 
-	return
+	return transactionList, nil
 }
 
 func (u *transactionUsecase) GetSingle(transaction entity.TransactionEntity) (result entity.TransactionEntity, err error) {
-	result, err = u.Usecase.Find(transaction)
-	if err != nil {
-		return result, err
-	}
-
-	var grandTotal float64
-	for _, transactionDetail := range result.TransactionDetail {
-		grandTotal += transactionDetail.Subtotal
-	}
-
-	result.GrandTotal = grandTotal
-	return
+	return u.Usecase.Find(transaction)
 }
