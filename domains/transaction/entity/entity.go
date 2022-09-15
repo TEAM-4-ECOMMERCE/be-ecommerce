@@ -2,6 +2,7 @@ package transactionentity
 
 type TransactionEntity struct {
 	TransactionID     uint
+	UserID            uint
 	TransactionCode   string
 	GrandTotal        float64
 	StatusTransaction string
@@ -31,25 +32,22 @@ type TransactionDetailEntity struct {
 	TransactionDetailID uint
 	Qty                 uint
 	Subtotal            float64
-	Product             ProductEntity
-}
-
-type ProductEntity struct {
-	ProductID uint
-	Name      string
-	ImageUrl  string
+	ProductID           uint
+	ProductName         string
+	ProductPrice        float64
+	ImageUrl            string
 }
 
 type IusecaseTransaction interface {
 	Store(transaction TransactionEntity) (err error)
 	Update(transaction TransactionEntity) (err error)
-	GetList(transaction TransactionEntity) (err error, result []TransactionDetailEntity)
-	GetSingle(transaction TransactionEntity) (err error, result TransactionDetailEntity)
+	GetList(transaction TransactionEntity) (result []TransactionEntity, err error)
+	GetSingle(transaction TransactionEntity) (result TransactionEntity, err error)
 }
 
 type IrepoTransaction interface {
 	Insert(transaction TransactionEntity) (err error)
 	Update(transaction TransactionEntity) (err error)
-	FindAll(transaction TransactionEntity) (err error, result []TransactionEntity)
-	Find(transaction TransactionEntity) (err error, result TransactionEntity)
+	FindAll(transaction TransactionEntity) (result []TransactionEntity, err error)
+	Find(transaction TransactionEntity) (result TransactionEntity, err error)
 }
