@@ -30,6 +30,10 @@ import (
 	categorycontrol "e-commerce/domains/category/delivery"
 	categoryrepo "e-commerce/domains/category/repositories"
 	categoryusecase "e-commerce/domains/category/usecase"
+
+	transactionhandler "e-commerce/domains/transaction/handlers"
+	transactionrepo "e-commerce/domains/transaction/repositories"
+	transactionusecase "e-commerce/domains/transaction/usecases"
 )
 
 func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
@@ -60,6 +64,10 @@ func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
 	categoryUsecase := categoryusecase.New(categoryRepo)
 	categoryControl := categorycontrol.New(categoryUsecase)
 
+	transactionRepo := transactionrepo.New(db)
+	transactionUsecase := transactionusecase.New(transactionRepo)
+	transactionHandler := transactionhandler.New(transactionUsecase)
+
 	/*
 		Routes
 	*/
@@ -84,4 +92,9 @@ func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
 	e.POST("/register", registerControl.CreateUser)
 
 	e.GET("/categories", categoryControl.GetAllCategory)
+
+	e.GET("/transaction", transactionHandler.GetList, middlewares.JWTMiddleware())
+	e.POST("/transaction", transactionHandler.Store, middlewares.JWTMiddleware())
+	e.PUT("/transaction/:id", transactionHandler.Update, middlewares.JWTMiddleware())
+	e.GET("/transaction/:id", transactionHandler.GetSingle, middlewares.JWTMiddleware())
 }
