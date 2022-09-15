@@ -48,6 +48,8 @@ type IusecaseTransaction interface {
 type IrepoTransaction interface {
 	Insert(transaction TransactionEntity) (err error)
 	Update(transaction TransactionEntity) (err error)
+	DeleteCart(transaction TransactionEntity) (err error)
 	FindAll(transaction TransactionEntity) (result []TransactionEntity, err error)
 	Find(transaction TransactionEntity) (result TransactionEntity, err error)
+	FindCart(transaction TransactionEntity) (result TransactionEntity, err error)
 }
