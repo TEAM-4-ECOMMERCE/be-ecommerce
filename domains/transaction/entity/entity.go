@@ -52,5 +52,6 @@ type IrepoTransaction interface {
 	DeleteCart(transaction TransactionEntity) (err error)
 	FindAll(transaction TransactionEntity) (result []TransactionEntity, err error)
 	Find(transaction TransactionEntity) (result TransactionEntity, err error)
-	FindCart(transaction TransactionEntity) (result TransactionEntity, err error)
+	FindCart(transaction TransactionEntity) (result []TransactionDetailEntity, err error)
+	FindLastInsertedId() (row int, err error)
 }

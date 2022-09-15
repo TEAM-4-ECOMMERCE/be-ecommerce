@@ -155,7 +155,7 @@ func (r *transactionRepo) Find(transaction entity.TransactionEntity) (result ent
 	return result, nil
 }
 
-func (r *transactionRepo) FindCart(transaction entity.TransactionEntity) (result entity.TransactionEntity, err error) {
+func (r *transactionRepo) FindCart(transaction entity.TransactionEntity) (result []entity.TransactionDetailEntity, err error) {
 	var cartList []model.Cart
 
 	tx := r.DB.Model(&model.Cart{}).Where("user_id", transaction.UserID).Find(&cartList)
@@ -164,7 +164,7 @@ func (r *transactionRepo) FindCart(transaction entity.TransactionEntity) (result
 	}
 
 	for _, cart := range cartList {
-		result.TransactionDetail = append(result.TransactionDetail, entity.TransactionDetailEntity{
+		result = append(result, entity.TransactionDetailEntity{
 			Qty:       cart.Qty,
 			ProductID: cart.ProductID,
 			Subtotal:  cart.Subtotal,
@@ -172,4 +172,18 @@ func (r *transactionRepo) FindCart(transaction entity.TransactionEntity) (result
 	}
 
 	return result, nil
+}
+
+func (r *transactionRepo) FindLastInsertedId() (row int, err error) {
+	var transactionModel model.Transaction
+	tx := r.DB.Model(&model.Transaction{}).Order("id DESC").First(&transactionModel)
+	if tx.Error != nil {
+		return -1, err
+	}
+
+	if transactionModel.ID > 0 {
+		return int(transactionModel.ID), nil
+	}
+
+	return 0, nil
 }
