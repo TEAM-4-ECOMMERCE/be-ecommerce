@@ -1,14 +1,16 @@
 package delivery
 
-import category"e-commerce/domains/category/entity"
+import category "e-commerce/domains/category/entity"
 
 type CategoryResponse struct {
-	CategoryName	string
+	CategoryID   uint   `json:"id"`
+	CategoryName string `json:"name"`
 }
 
 func FromCore(data category.CategoryEntity) CategoryResponse {
 	return CategoryResponse{
-		CategoryName: 	data.CategoryName,
+		CategoryID:   uint(data.CategoryID),
+		CategoryName: data.CategoryName,
 	}
 }
 
@@ -22,6 +24,7 @@ func CoreList(data []category.CategoryEntity) []CategoryResponse {
 
 func CoreResponse(data category.CategoryEntity) CategoryResponse {
 	Response := CategoryResponse{
+		CategoryID:   uint(data.CategoryID),
 		CategoryName: data.CategoryName,
 	}
 	return Response

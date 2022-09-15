@@ -20,16 +20,16 @@ import (
 	cartusecase "e-commerce/domains/cart/usecases"
 
 	userscontrol "e-commerce/domains/users/delivery"
-	usersrepo 	"e-commerce/domains/users/repositories"
+	usersrepo "e-commerce/domains/users/repositories"
 	usersusecase "e-commerce/domains/users/usecase"
 
 	registercontrol "e-commerce/domains/register/delivery"
 	registerrepo "e-commerce/domains/register/repositories"
-	registerusecase	"e-commerce/domains/register/usecase"
+	registerusecase "e-commerce/domains/register/usecase"
 
 	categorycontrol "e-commerce/domains/category/delivery"
-	categoryrepo	"e-commerce/domains/category/repositories"
-	categoryusecase	"e-commerce/domains/category/usecase"
+	categoryrepo "e-commerce/domains/category/repositories"
+	categoryusecase "e-commerce/domains/category/usecase"
 )
 
 func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
@@ -77,11 +77,11 @@ func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
 	e.PUT("/cart/:id", cartHandler.Update, middlewares.JWTMiddleware())
 	e.DELETE("/cart/:id", cartHandler.Delete, middlewares.JWTMiddleware())
 
-	e.GET("/users", usersControl.GetUser,middlewares.JWTMiddleware())    
-	e.GET("/users",usersControl.DeleteUser, middlewares.JWTMiddleware()) 
-	e.POST("/users", usersControl.UpdateUser,middlewares.JWTMiddleware())
+	e.GET("/users", usersControl.GetUser, middlewares.JWTMiddleware())
+	e.GET("/users", usersControl.DeleteUser, middlewares.JWTMiddleware())
+	e.POST("/users", usersControl.UpdateUser, middlewares.JWTMiddleware())
 
-	e.POST("/register", registerControl.CreateUser,middlewares.JWTMiddleware())
+	e.POST("/register", registerControl.CreateUser, middlewares.JWTMiddleware())
 
-	e.GET("/category", categoryControl.GetAllCategory,middlewares.JWTMiddleware())
+	e.GET("/categories", categoryControl.GetAllCategory)
 }

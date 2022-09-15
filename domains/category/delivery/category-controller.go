@@ -8,7 +8,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type CategoryControl struct{
+type CategoryControl struct {
 	categoryUsecase categoryentity.IusecaseCategory
 }
 
@@ -18,7 +18,7 @@ func New(logic categoryentity.IusecaseCategory) *CategoryControl {
 	}
 }
 
-func (control *CategoryControl) GetAllCategory(c echo.Context) error{
+func (control *CategoryControl) GetAllCategory(c echo.Context) error {
 	result, err := control.categoryUsecase.GetCategory()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("internal server error"))
