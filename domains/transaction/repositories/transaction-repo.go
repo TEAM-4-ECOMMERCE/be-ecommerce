@@ -97,7 +97,7 @@ func (r *transactionRepo) DeleteCart(transaction entity.TransactionEntity) (err 
 func (r *transactionRepo) FindAll(transaction entity.TransactionEntity) (result []entity.TransactionEntity, err error) {
 	var transactionModelList []model.Transaction
 
-	tx := r.DB.Model(&model.Transaction{}).Where("user_id", transaction.UserID).Find(&transactionModelList)
+	tx := r.DB.Model(&model.Transaction{}).Where("user_id", transaction.UserID).Where("status = ?", transaction.StatusTransaction).Find(&transactionModelList)
 	if err != nil {
 		return result, tx.Error
 	}
@@ -109,7 +109,7 @@ func (r *transactionRepo) FindAll(transaction entity.TransactionEntity) (result 
 			TransactionCode:   transactionModel.TransactionCode,
 			GrandTotal:        transactionModel.GrandTotal,
 			StatusTransaction: transactionModel.Status,
-			TransactionDate:   transaction.TransactionDate,
+			TransactionDate:   int64(transactionModel.CreatedAt.Unix()),
 		})
 	}
 	return
@@ -118,11 +118,35 @@ func (r *transactionRepo) FindAll(transaction entity.TransactionEntity) (result 
 func (r *transactionRepo) Find(transaction entity.TransactionEntity) (result entity.TransactionEntity, err error) {
 	var transactionModel model.Transaction
 
-	tx := r.DB.Where("user_id", transaction.UserID).Preload("Address").Preload("CreditCard").Preload("TransactionDetail.Product").First(&transactionModel)
+	tx := r.DB.Model(&model.Transaction{}).Where("id = ?", transaction.TransactionID).Where("user_id", transaction.UserID).Preload("Address").Preload("CreditCard").Preload("TransactionDetail.Product").First(&transactionModel)
+
 	if tx.Error != nil {
 		return result, tx.Error
 	}
 
+	result = entity.TransactionEntity{
+		TransactionID:     transactionModel.ID,
+		UserID:            transactionModel.UserID,
+		TransactionCode:   transactionModel.TransactionCode,
+		StatusTransaction: transactionModel.Status,
+		GrandTotal:        transactionModel.GrandTotal,
+		TransactionDate:   int64(transactionModel.CreatedAt.Unix()),
+		Address: entity.AddressEntity{
+			AddressID: transactionModel.Address.ID,
+			Street:    transactionModel.Address.Street,
+			City:      transactionModel.Address.City,
+			Province:  transactionModel.Address.State,
+			Zipcode:   transactionModel.Address.Zip,
+		},
+		CreditCard: entity.CreditCardEntity{
+			CreditCardID: transactionModel.CreditCard.ID,
+			Visa:         transactionModel.CreditCard.Type,
+			NameOfCard:   transactionModel.CreditCard.Name,
+			NumberCard:   transactionModel.CreditCard.Number,
+			CVV:          transactionModel.CreditCard.CVV,
+			ExpiredDate:  transactionModel.CreditCard.Date,
+		},
+	}
 	for _, transactionDetail := range transactionModel.TransactionDetail {
 		result.TransactionDetail = append(result.TransactionDetail, entity.TransactionDetailEntity{
 			TransactionDetailID: transaction.TransactionID,
@@ -133,23 +157,6 @@ func (r *transactionRepo) Find(transaction entity.TransactionEntity) (result ent
 			ProductPrice:        transactionDetail.Product.Price,
 			ImageUrl:            transactionDetail.Product.ImageUrl,
 		})
-	}
-
-	result.Address = entity.AddressEntity{
-		AddressID: transaction.Address.AddressID,
-		Street:    transaction.Address.Street,
-		City:      transaction.Address.City,
-		Province:  transaction.Address.Province,
-		Zipcode:   transaction.Address.Zipcode,
-	}
-
-	result.CreditCard = entity.CreditCardEntity{
-		CreditCardID: transaction.CreditCard.CreditCardID,
-		Visa:         transaction.CreditCard.Visa,
-		NameOfCard:   transaction.CreditCard.NameOfCard,
-		NumberCard:   transaction.CreditCard.NumberCard,
-		CVV:          transaction.CreditCard.CVV,
-		ExpiredDate:  transaction.CreditCard.ExpiredDate,
 	}
 
 	return result, nil

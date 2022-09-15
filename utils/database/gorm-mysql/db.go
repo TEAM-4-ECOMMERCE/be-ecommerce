@@ -11,7 +11,8 @@ import (
 	cartModel "e-commerce/domains/cart/models"
 	categoryModel "e-commerce/domains/category/data"
 	productmodel "e-commerce/domains/product/models"
-	users "e-commerce/domains/users/data"
+	transactionModel "e-commerce/domains/transaction/models"
+	usersModel "e-commerce/domains/users/data"
 )
 
 func InitDB(cfg *config.AppConfig) *gorm.DB {
@@ -30,8 +31,12 @@ func InitDB(cfg *config.AppConfig) *gorm.DB {
 func autoMigrate(db *gorm.DB) {
 	db.AutoMigrate(
 		new(categoryModel.Category),
-		new(users.User),
+		new(usersModel.User),
 		new(productmodel.Product),
 		new(cartModel.Cart),
+		new(transactionModel.CreditCard),
+		new(transactionModel.Address),
+		new(transactionModel.Transaction),
+		new(transactionModel.TransactionDetail),
 	)
 }
