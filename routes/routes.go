@@ -86,7 +86,7 @@ func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
 	e.DELETE("/cart/:id", cartHandler.Delete, middlewares.JWTMiddleware())
 
 	e.GET("/users", usersControl.GetUser, middlewares.JWTMiddleware())
-	e.GET("/users", usersControl.DeleteUser, middlewares.JWTMiddleware())
+	e.DELETE("/users", usersControl.DeleteUser, middlewares.JWTMiddleware())
 	e.POST("/users", usersControl.UpdateUser, middlewares.JWTMiddleware())
 
 	e.POST("/register", registerControl.CreateUser)
