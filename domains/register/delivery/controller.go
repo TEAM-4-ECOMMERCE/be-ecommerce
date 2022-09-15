@@ -2,17 +2,28 @@ package delivery
 
 import (
 	reg "e-commerce/domains/register/entity"
+	"e-commerce/middlewares"
 	"e-commerce/utils/helpers"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
 
-type RegisterControl struct {
+type registercontrol struct{
 	RegisterInterface reg.IregisterInterface
 }
 
-func (control *RegisterControl) CreateUser(c echo.Context) error {
+func NewController(logic reg.IregisterInterface) *registercontrol{
+	return &registercontrol{
+		RegisterInterface: logic,
+	}
+}
+
+func (control *registercontrol) CreateUser(c echo.Context) error {
+	userToken, errToken := middlewares.ExtractToken(c)
+	if userToken == 0 || errToken != nil{
+		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("token nya tuan !"))
+	}
 	var dataRequest requestRegister
 	errBind := c.Bind(&dataRequest)
 	if errBind != nil {
@@ -22,14 +33,5 @@ func (control *RegisterControl) CreateUser(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("error create data"))
 	}
-	return c.JSON(http.StatusCreated, helpers.SuccessGetResponseData("success create data"))
-}
-
-func NewController(e *echo.Echo, logic reg.IregisterInterface) {
-	controller := &RegisterControl{
-		RegisterInterface: logic,
-	}
-
-	e.POST("/register", controller.CreateUser)
-
+	return c.JSON(http.StatusCreated, helpers.SuccessGetResponse("success create data", userToken))
 }

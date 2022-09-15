@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 
 	cartModel "e-commerce/domains/cart/models"
-	categoryModel "e-commerce/domains/category/model"
+	categoryModel "e-commerce/domains/category/data"
 	productmodel "e-commerce/domains/product/models"
 	users "e-commerce/domains/users/data"
 )

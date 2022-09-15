@@ -19,13 +19,17 @@ import (
 	cartrepo "e-commerce/domains/cart/repositories"
 	cartusecase "e-commerce/domains/cart/usecases"
 
-	registerrepo "e-commerce/domains/register/data"
-	registerhandler "e-commerce/domains/register/delivery"
+	userscontrol "e-commerce/domains/users/delivery"
+	usersrepo "e-commerce/domains/users/repositories"
+	usersusecase "e-commerce/domains/users/usecase"
+
+	registercontrol "e-commerce/domains/register/delivery"
+	registerrepo "e-commerce/domains/register/repositories"
 	registerusecase "e-commerce/domains/register/usecase"
 
-	usersrepo "e-commerce/domains/users/data"
-	usershandler "e-commerce/domains/users/delivery"
-	usersusecase "e-commerce/domains/users/usecase"
+	categorycontrol "e-commerce/domains/category/delivery"
+	categoryrepo "e-commerce/domains/category/repositories"
+	categoryusecase "e-commerce/domains/category/usecase"
 )
 
 func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
@@ -44,13 +48,17 @@ func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
 	cartUsecase := cartusecase.New(cartRepo)
 	cartHandler := carthandler.New(cartUsecase)
 
-	registerRepo := registerrepo.NewRegister(db)
-	registerUsecase := registerusecase.NewLogic(registerRepo)
-	registerhandler.NewController(e, registerUsecase)
-
 	usersRepo := usersrepo.NewDataBase(db)
 	usersUsecase := usersusecase.NewLogic(usersRepo)
-	usershandler.NewController(e, usersUsecase)
+	usersControl := userscontrol.NewController(usersUsecase)
+
+	registerRepo := registerrepo.NewRegister(db)
+	registerUsecase := registerusecase.NewLogic(registerRepo)
+	registerControl := registercontrol.NewController(registerUsecase)
+
+	categoryRepo := categoryrepo.New(db)
+	categoryUsecase := categoryusecase.New(categoryRepo)
+	categoryControl := categorycontrol.New(categoryUsecase)
 
 	/*
 		Routes
@@ -68,4 +76,12 @@ func InitRoutes(e *echo.Echo, db *gorm.DB, cfg *config.AppConfig) {
 	e.POST("/carts", cartHandler.Store, middlewares.JWTMiddleware())
 	e.PUT("/cart/:id", cartHandler.Update, middlewares.JWTMiddleware())
 	e.DELETE("/cart/:id", cartHandler.Delete, middlewares.JWTMiddleware())
+
+	e.GET("/users", usersControl.GetUser, middlewares.JWTMiddleware())
+	e.GET("/users", usersControl.DeleteUser, middlewares.JWTMiddleware())
+	e.POST("/users", usersControl.UpdateUser, middlewares.JWTMiddleware())
+
+	e.POST("/register", registerControl.CreateUser, middlewares.JWTMiddleware())
+
+	e.GET("/categories", categoryControl.GetAllCategory)
 }

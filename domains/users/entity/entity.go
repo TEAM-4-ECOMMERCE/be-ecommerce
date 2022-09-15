@@ -19,7 +19,7 @@ type IusecaseUser interface {
 }
 
 type IuserInterface interface {
-	SelectUser() (data []Users, err error)
-	DeleteUser(dataDelete Users) (row int, err error)
-	UpdateUser(dataUpdate Users) (row int, err error)
+	GetUser() (data []Users, err error)
+	DeleteUser (dataDelete Users) (row int, err error)
+	UpdateUser (dataUpdate Users) (row int, err error)
 }

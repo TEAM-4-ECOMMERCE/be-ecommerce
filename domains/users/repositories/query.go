@@ -2,6 +2,7 @@ package data
 
 import (
 	users "e-commerce/domains/users/entity"
+	models "e-commerce/domains/users/data"
 	"errors"
 
 	"gorm.io/gorm"
@@ -17,20 +18,20 @@ func NewDataBase(db *gorm.DB) users.IuserInterface {
 	}
 }
 
-func (file *DataUser) SelectUser() ([]users.Users, error) {
-	var data []User
+func (file *DataUser)GetUser() ([]users.Users, error)  {
+	var data []models.User
 	tx := file.db.Find(&data)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
-	Users := CoreList(data)
+	Users := models.CoreList(data)
 	return Users, nil
 }
 
 func (file *DataUser) DeleteUser(dataDelete users.Users) (int, error) {
-	userModel := User{}
+	userModel := models.User{}
 	userModel.ID = uint(dataDelete.UID)
-	tx := file.db.Model(&User{}).Delete(&userModel)
+	tx := file.db.Model(&models.User{}).Delete(&userModel)
 	if tx.Error != nil {
 		return -1, tx.Error
 	}
@@ -41,8 +42,8 @@ func (file *DataUser) DeleteUser(dataDelete users.Users) (int, error) {
 }
 
 func (file *DataUser) UpdateUser(dataUpdate users.Users) (int, error) {
-	userModel := FromCore(dataUpdate)
-	tx := file.db.Model(&User{}).Where("id = ?", dataUpdate.UID).Updates(&userModel)
+	userModel := models.FromCore(dataUpdate)
+	tx := file.db.Model(&models.User{}).Where("id = ?", dataUpdate.UID).Updates(&userModel)
 	if tx.Error != nil {
 		return -1, tx.Error
 	}
