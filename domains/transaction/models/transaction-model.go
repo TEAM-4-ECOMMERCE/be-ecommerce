@@ -4,11 +4,12 @@ import "gorm.io/gorm"
 
 type Transaction struct {
 	gorm.Model
-	UserID       uint
-	AddressID    uint
-	CreditCardID uint
-	GrandTotal   float64
-	Status       string
+	UserID          uint
+	AddressID       uint
+	CreditCardID    uint
+	TransactionCode string
+	GrandTotal      float64
+	Status          string
 
 	TransactionDetail []TransactionDetail
 	Address           Address

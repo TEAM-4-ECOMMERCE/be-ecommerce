@@ -25,6 +25,7 @@ type CreditCardEntity struct {
 	Visa         string
 	NameOfCard   string
 	NumberCard   string
+	CVV          string
 	ExpiredDate  float64
 }
 

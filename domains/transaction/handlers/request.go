@@ -10,6 +10,7 @@ type StoreRequest struct {
 	State       string  `json:"state"`
 	Zipcode     string  `json:"zipcode"`
 	Visa        string  `json:"visa"`
+	CVV         string  `json:"cvv"`
 	NameOnCard  string  `json:"name_on_card"`
 	NumberCard  string  `json:"number_card"`
 	ExpiredDate float64 `json:"expiration_date"`
@@ -32,6 +33,7 @@ func RequestToEntity(request StoreRequest) entity.TransactionEntity {
 			NameOfCard:  request.NameOnCard,
 			NumberCard:  request.NameOnCard,
 			ExpiredDate: request.ExpiredDate,
+			CVV:         request.CVV,
 		},
 	}
 }
