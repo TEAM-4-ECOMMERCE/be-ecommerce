@@ -21,11 +21,11 @@ func New(usecase entity.IusecaseAuth) *authHandler {
 func (h *authHandler) Login(c echo.Context) error {
 	authRequest := authRequest{}
 
+	c.Bind(&authRequest)
+
 	if err := c.Validate(authRequest); err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
 	}
-
-	c.Bind(&authRequest)
 
 	authEntity := requestToEntity(authRequest)
 	token, err := h.Usecase.Login(authEntity)

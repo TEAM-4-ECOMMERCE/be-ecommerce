@@ -28,11 +28,12 @@ func (h *cartHandler) Store(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
 	}
 
+	err = c.Bind(&cartRequest)
+
 	if err := c.Validate(cartRequest); err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
 	}
 
-	err = c.Bind(&cartRequest)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
 	}
@@ -57,11 +58,12 @@ func (h *cartHandler) Update(c echo.Context) error {
 
 	cartRequest := cartRequestUpdate{}
 
+	err = c.Bind(&cartRequest)
+
 	if err := c.Validate(cartRequest); err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
 	}
 
-	err = c.Bind(&cartRequest)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
 	}

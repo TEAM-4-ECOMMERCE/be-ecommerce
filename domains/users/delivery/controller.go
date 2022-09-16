@@ -51,15 +51,16 @@ func (control *usercontrol) UpdateUser(c echo.Context) error {
 	}
 	var dataUpdate UserRequest
 
-	if err := c.Validate(dataUpdate); err != nil {
-		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
-	}
-
 	errBind := c.Bind(&dataUpdate)
 	dataUpdate.UserID = userToken
 	if errBind != nil {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse("bad request to update data"))
 	}
+
+	if err := c.Validate(dataUpdate); err != nil {
+		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
+	}
+
 	_, err := control.UserInterface.UpdateUser(toCoreRequest(dataUpdate))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("fail to update data"))
