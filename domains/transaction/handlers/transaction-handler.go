@@ -28,6 +28,10 @@ func (h *transactionHandler) Store(c echo.Context) error {
 
 	var transactionRequest StoreRequest
 
+	if err := c.Validate(transactionRequest); err != nil {
+		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
+	}
+
 	err = c.Bind(&transactionRequest)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
@@ -56,6 +60,10 @@ func (h *transactionHandler) Update(c echo.Context) error {
 	}
 
 	var transactionRequest UpdateRequest
+
+	if err := c.Validate(transactionRequest); err != nil {
+		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
+	}
 
 	err = c.Bind(&transactionRequest)
 	if err != nil {

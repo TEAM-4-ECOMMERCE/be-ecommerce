@@ -20,6 +20,11 @@ func NewController(logic reg.IregisterInterface) *registercontrol {
 
 func (control *registercontrol) CreateUser(c echo.Context) error {
 	var dataRequest requestRegister
+
+	if err := c.Validate(dataRequest); err != nil {
+		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
+	}
+
 	errBind := c.Bind(&dataRequest)
 	if errBind != nil {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse("error bind data"))

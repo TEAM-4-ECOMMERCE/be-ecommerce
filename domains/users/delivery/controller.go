@@ -13,7 +13,7 @@ type usercontrol struct {
 	UserInterface users.IusecaseUser
 }
 
-func NewController(logic users.IusecaseUser) *usercontrol{
+func NewController(logic users.IusecaseUser) *usercontrol {
 	return &usercontrol{
 		UserInterface: logic,
 	}
@@ -44,12 +44,17 @@ func (control *usercontrol) GetUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, helpers.SuccessGetResponse("success", userResult))
 }
 
-func (control *usercontrol) UpdateUser (c echo.Context) error{
+func (control *usercontrol) UpdateUser(c echo.Context) error {
 	userToken, errToken := middlewares.ExtractToken(c)
 	if userToken == 0 || errToken != nil {
 		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("token nya tuan !"))
 	}
 	var dataUpdate UserRequest
+
+	if err := c.Validate(dataUpdate); err != nil {
+		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
+	}
+
 	errBind := c.Bind(&dataUpdate)
 	dataUpdate.UserID = userToken
 	if errBind != nil {
@@ -62,7 +67,7 @@ func (control *usercontrol) UpdateUser (c echo.Context) error{
 	return c.JSON(http.StatusOK, helpers.SuccessGetResponseData("succses update data"))
 }
 
-func (control *usercontrol) DeleteUser(c echo.Context) error{
+func (control *usercontrol) DeleteUser(c echo.Context) error {
 	userToken, errToken := middlewares.ExtractToken(c)
 	if userToken == 0 || errToken != nil {
 		return c.JSON(http.StatusInternalServerError, helpers.FailedResponse("token nya tuan !"))

@@ -5,12 +5,12 @@ import (
 )
 
 type ProductRequest struct {
-	CategoryID  uint   `json:"category_id"`
-	Name        string `json:"name"`
-	Price       uint   `json:"price"`
-	Stock       uint   `json:"stock"`
-	Description string `json:"description"`
-	ImageUrl    string `json:"image_url"`
+	CategoryID  uint   `json:"category_id" validate:"required"`
+	Name        string `json:"name" validate:"required"`
+	Price       uint   `json:"price" validate:"required"`
+	Stock       uint   `json:"stock" validate:"required"`
+	Description string `json:"description" validate:"required"`
+	ImageUrl    string `json:"image_url" validate:"required"`
 }
 
 func RequestToEntity(request ProductRequest) entity.ProductEntity {

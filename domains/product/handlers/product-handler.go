@@ -30,6 +30,10 @@ func (h *producthandler) Store(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, helpers.FailedResponse(err.Error()))
 	}
 
+	if err := c.Validate(userRequest); err != nil {
+		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
+	}
+
 	err = c.Bind(&userRequest)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
@@ -58,6 +62,10 @@ func (h *producthandler) Update(c echo.Context) error {
 
 	productId, err = strconv.Atoi(c.Param("id"))
 	if err != nil {
+		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
+	}
+
+	if err := c.Validate(userRequest); err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.FailedResponse(err.Error()))
 	}
 
